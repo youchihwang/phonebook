@@ -42,7 +42,10 @@ typedef struct __PHONE_BOOK_ENTRY {
     struct __PHONE_BOOK_ENTRY *pNext;
 } entry;
 
-
+typedef struct __LEVEL1_COMPARE {
+    char first_char_of_name;
+    entry *link;
+} level1_compare;
 
 entry *findName(char lastName[], entry *pHead);
 entry *append(char lastName[], entry *e);
