@@ -23,6 +23,7 @@ phonebook_opt_2: $(SRCS_common) phonebook_opt_2.c phonebook_opt_2.h
 	$(CC) $(CFLAGS_common) $(CFLAGS_opt) \
 		-DIMPL="\"$@.h\"" -o $@ \
                 -DDATA_STRUCTURE_OPTIMIZATION_SMALLER_SIZE \
+                -DPHONEBOOK_OPTIMIZATION_2 \
 		$(SRCS_common) $@.c
 
 run: $(EXEC)
