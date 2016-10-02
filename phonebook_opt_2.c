@@ -67,7 +67,7 @@ entry *append(char lastName[], entry *e)
     entry * level1_link = NULL;
 
     index = lastName[0] - 'a'; // bucket array index
-    
+
     //printf("index : %d\n", index);
     //printf(" lastName : %s\n first_char_link[index].first_char_of_name : %c\n", lastName, first_char_link[index].first_char_of_name);
 
