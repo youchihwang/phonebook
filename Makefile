@@ -3,7 +3,7 @@ CFLAGS_common ?= -Wall -std=gnu99
 CFLAGS_orig = -O0
 CFLAGS_opt  = -O0
 
-EXEC = phonebook_orig phonebook_opt phonebook_opt_2
+EXEC = phonebook_orig phonebook_opt phonebook_opt_2 phonebook_opt_3
 all: $(EXEC)
 
 SRCS_common = main.c
@@ -26,6 +26,14 @@ phonebook_opt_2: $(SRCS_common) phonebook_opt_2.c phonebook_opt_2.h
                 -DPHONEBOOK_OPTIMIZATION_2 \
 		$(SRCS_common) $@.c
 
+
+phonebook_opt_3: $(SRCS_common) phonebook_opt_3.c phonebook_opt_3.h
+	$(CC) $(CFLAGS_common) $(CFLAGS_opt) \
+		-DIMPL="\"$@.h\"" -o $@ \
+                -DDATA_STRUCTURE_OPTIMIZATION_SMALLER_SIZE \
+                -DPHONEBOOK_OPTIMIZATION_2 \
+		$(SRCS_common) $@.c
+
 run: $(EXEC)
 	echo 3 | sudo tee /proc/sys/vm/drop_caches
 	watch -d -t "./phonebook_orig && echo 3 | sudo tee /proc/sys/vm/drop_caches"
@@ -39,7 +47,10 @@ cache-test: $(EXEC)
 		./phonebook_opt
 	perf stat --repeat 100 \
 		-e cache-misses,cache-references,instructions,cycles \
-		./phonebook_opt_2
+		./phonebook_opt_2 \
+	perf stat --repeat 100 \
+		-e cache-misses,cache-references,instructions,cycles \
+		./phonebook_opt3_
 
 output.txt: cache-test calculate
 	./calculate
